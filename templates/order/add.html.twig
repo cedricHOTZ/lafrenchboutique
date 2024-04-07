@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block javascript %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block title %}Paiement de ma commande | La French Boutique
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto px-4">
+
+		<h2 class="mt-8 mb-8">Mon récapitulatif</h2>
+		<p class="mb-5">Vérifier vos informations avant de payer votre commande</p>
+
+
+		<div class="grid grid-validation gap-2 justify-evenly">
+			<div class="">
+				<p class="mt-2 mb-4">Mon transporteur:</p>
+				{{carrier.name}}
+				{{(carrier.price / 100)|number_format(2,',',',') }}€
+			
+			
+				<p class="mt-2 mb-4">Mon adresse de livraison:</p>
+				{{delivery|raw}}
+			</div>
+			<div class="">
+
+
+				<h2 class="text-center">Ma commande</h2>
+				
+				{% set total = null %}
+				{% for key,product in cart %}
+					<div class=" recapitulatif gap-8 columns-3 {% if key > 0%}mt-2{% endif %}">
+
+
+						<div class="col">
+							<img src="/uploads/{{product.product.illustration}}" alt="{{product.product.name}}" height="20px" class="img-orderDetail"/>
+						</div>
+
+						<div class="col">
+							<h3>{{product.product.name}}</h3>
+							<small>{{product.product.subtitle}}</small>
+						</div>
+
+						<div class="col">
+							x{{product.quantity}}
+
+						</div>
+						<div class="col">
+							{{(product.product.price / 100)|number_format(2,',',',') }}€
+						</div>
+						
+					</div>
+                      <hr>
+					{% set total = total + (product.product.price * product.quantity) %}
+                
+				{% endfor %}
+  <p class="mt-5">  <strong>Sous-total :
+						</strong>
+						{{ (total / 100)|number_format(2,',')}}€
+                        </p>
+                        <p>
+						<strong>Livraison :
+						</strong>
+						{{ (carrier.price / 100)|number_format(2,',','.')}}
+						</p>    
+                        <hr>
+                        <p>
+						<strong>Total :
+						</strong>
+						{{ ((total / 100) + (carrier.price / 100))|number_format(2,',','.')}}€
+</p>
+                        <a href="{{path('stripe_create_session',{'reference':reference}) }}"  id="checkout-button" >
+                       <button type="submit"  class="mt-5 inline-flex items-center justify-left p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+						<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+							 Payer | {{ ((total / 100 ) + (carrier.price / 100))|number_format(2,',','.')}}€
+
+						</span>
+					</button>
+                       </a>
+			</div>
+            </div>
+          
+						
+		
+	</div>
+{% endblock %}
+
+{% block script %}
+
+
+{% endblock %}

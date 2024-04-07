@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - La French Boutique
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto">
+		<a href="{{path('app_account')}}">
+			<button class="relative inline-flex items-center justify-left  my-8 p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+				<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+					Retour à mon compte
+				</span>
+			</button>
+		</a>
+		<a href="{{path('app_account_address_add')}}">
+			<button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajouter une adresse</button>
+		</a>
+		<h1 class="mt-8 text-center text-white">Mes commandes</h1>
+
+		<p class="mt-10 text-white">C'est dans cet espace que vous pouvez voir toutes vos commandes.</p>
+
+
+		{% if orders|length == 0 %}
+			<p class="text-white">Vous n'avez pas encore passé une commande sur La French Boutique</p>
+
+		</p>
+		<p>
+		{% else %}
+
+
+			<div class="overflow-x-auto relative  sm:rounded-lg my-8">
+				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+					<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+						<tr>
+							<th scope="col" class="py-3 px-6">
+								Statut
+							</th>
+							<th scope="col" class="py-3 px-6">
+								Passé le
+							</th>
+
+							<th scope="col" class="py-3 px-6">
+								Référence
+							</th>
+							<th scope="col" class="py-3 px-6">
+								Quantité
+							</th>
+							<th scope="col" class="py-3 px-6">
+								Total
+							</th>
+
+							<th scope="col" class="py-3 px-6"></th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+						{% for order in orders %}
+							<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+								<td class="py-4 px-6">
+									{% if order.state == 1 %}
+										Paiement accepté
+									{% elseif order.state == 2 %}
+										Préparation en cours
+									{% elseif order.state == 3 %}
+										Livraison en cours
+									{% endif %}
+								</td>
+								<td class="py-4 px-6">
+									{{order.createdAt|date('d/m/Y')}}
+								</td>
+								<td class="py-4 px-6">
+									{{order.reference}}
+								</td>
+								<td class="py-4 px-6">
+									{{order.orderDetails|length}}
+								</td>
+								<td class="py-4 px-6">
+									{{((order.carrierPrice + order.getTotal) / 100)|number_format(2,',','.')}}€
+								</td>
+								<td class="">
+									<a href="{{path('app_account_order_show',{'reference': order.reference})}}">Voir ma commande</a>
+								</td>
+
+							</tr>
+
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="grid-address mt-8"></div>
+			{% endif %}
+		</div>
+	{% endblock %}

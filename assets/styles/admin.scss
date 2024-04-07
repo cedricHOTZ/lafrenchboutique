@@ -1,0 +1,34 @@
+
+/* body */
+.ea{
+background-color: #222222;
+}
+
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+
+#loader img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.textetest {
+    color: red !important;
+}
+
+
+.reatexte {
+    color: #f4f8ff !important;
+}

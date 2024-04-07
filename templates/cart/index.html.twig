@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier - La French Boutique
+{% endblock %}
+
+{% block body %}
+<!-- Jumbotron -->
+<div class="p-6 shadow-lg rounded-lg bg-gray-100 text-gray-700 my-8 jumbotron-mon-panier">
+	<h1 class="font-semibold text-3xl mb-5 text-center">Mon panier</h1>
+
+	<hr class="my-6 border-gray-300"/>
+	<p class="text-center">
+		Retrouvez l'ensemble des produits que vous avez ajouté à votre panier
+	</p>
+
+</div>
+{% if cart|length > 0 %}
+
+	<div class="container mx-auto my-8 mb-8">
+
+		<div class="overflow-x-auto relative shadow-md sm:rounded-lg my-8">
+			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
+				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+					<tr>
+						<th scope="col" class="py-3 px-6">
+							Produits
+						</th>
+						<th scope="col" class="py-3 px-6"></th>
+						<th scope="col" class="py-3 px-6">
+							Quantité
+						</th>
+						<th scope="col" class="py-3 px-6">
+							Prix
+						</th>
+						<th scope="col" class="py-3 px-6">
+							Total
+						</th>
+
+						<th scope="col" class="py-3 px-6"></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					{% set total = null %}
+					{% for product in cart %}
+						<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+							<th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+								<img src="/uploads/{{product.product.illustration}}" alt="{{product.product.name}}" class="img-panier"/>
+
+							</th>
+							<td class="py-4 px-6">
+								{{product.product.name}}
+							</td>
+							<td class="py-4 px-6">
+                            <a href="{{path('add_to_cart',{'id':product.product.id})}}">
+                            <img src="{{asset('images/ajouter.png')}}" class="img-plus"/></a>
+								{{product.quantity}}
+                                 <a href="{{path('diminuer-cart',{'id':product.product.id})}}"> <img src="{{asset('images/signe-moins.png')}}" class="img-moin"/></a>
+							</td>
+							<td class="py-4 px-6">
+								{{(product.product.price / 100)|number_format(2,',',',') }}€
+							</td>
+							<td class="py-4 px-6">
+								{{((product.product.price * product.quantity)/100)|number_format(2,',',',') }}€
+							</td>
+							<td>
+								<a href="{{path('delete_to_cart',{'id':product.product.id}) }}">
+									<img class="delete-panier" src="{{asset('images/poubelle.png')}}" alt="" height="18px"/></a>
+							</td>
+
+						</tr>
+						{% set total = total + (product.product.price * product.quantity ) %}
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="text-right bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+				<p class="py-4 px-8">Nombre de produit :
+					{{cart|length}}</p>
+				<p class="py-4 px-8">
+					Total du panier :
+					{{(total / 100)|number_format(2,',',',  ') }}€
+				</p>
+				<div class="px-8">
+
+					<a href="{{path('app_order')}}">
+						<button class=" inline-flex items-center justify-right p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+							<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+								Valider mon panier
+							</span>
+						</button>
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+{% else %}
+	<hr>
+		<p class="text-center">Votre panier est vide</p>
+	</hr>
+{% endif %}{% endblock %}

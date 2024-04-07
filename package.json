@@ -1,0 +1,41 @@
+{
+  "name": "e-commerce-symfony-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets",
+    "autoprefixer": "^10.4.19",
+    "chart.js": "^3.4.1",
+    "daisyui": "^4.7.3",
+    "postcss-loader": "^7.3.4",
+    "sass": "^1.72.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@symfony/webpack-encore": "^4.6.1",
+    "@tailwindcss/forms": "^0.5.7",
+    "core-js": "^3.36.1",
+    "flowbite": "^2.3.0",
+    "jquery": "^3.7.1",
+    "notyf": "^3.10.0",
+    "popper.js": "^1.16.1",
+    "tailwindcss": "^3.4.1",
+    "tw-elements": "^2.0.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-notifier": "^1.15.0"
+  }
+}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma livraison | La French Boutique
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto px-4">
+
+		<h2 class="mt-8 mb-8">Je passe ma commande</h2>
+		<p class="mb-5">Choisissez vos préférences avant de passer votre commande sur La French Boutique</p>
+
+
+		<div class="grid grid-validation gap-2 justify-evenly">
+			<div class="">
+				<p class="mt-2 mb-4">Choisissez votre adresse de livraison</p>
+				{% set formHtml %}
+				
+                <a href="{{path('app_account_address_add')}}">
+                <button class=" mb-5 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"> Ajouter une nouvelle adresse</button>
+               </a>
+               {{form_start(form,{action:path('app_order_recapitulatif')}) }}
+                {{form_label(form.addresses)}}
+					{{form_end(form)}}
+                    {% endset %}
+
+					{{ formHtml|replace({'[br]' : '<br/>'})|raw}}
+
+				</div>
+				<div class="">
+					
+
+						<h2 class="text-center">Récapitulatif de ma commande</h2>
+                        <p class="text-center">Retrouvez le récapitulatif de vos produits</p>
+						{% for key,product in cart %}
+							<div class=" recapitulatif gap-8 columns-3 {% if key > 0%}mt-2{% endif %}">
+
+
+								<div class="col">
+									<img src="/uploads/{{product.product.illustration}}" alt="{{product.product.name}}" height="20px" class="img-orderDetail"/>
+								</div>
+
+								<div class="col">
+									<h3>{{product.product.name}}</h3>
+									<small>{{product.product.subtitle}}</small>
+								</div>
+
+								<div class="col">
+									x{{product.quantity}}
+
+								</div>
+							</div>
+						{% endfor %}
+				
+    
+				</div>
+			</div>
+		</div>
+	{% endblock %}

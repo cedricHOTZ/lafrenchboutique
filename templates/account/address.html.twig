@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses - La French Boutique
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto">
+		<a href="{{path('app_account')}}">
+			<button class="relative inline-flex items-center justify-left  my-8 p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+				<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+					Retour à mon compte
+				</span>
+			</button>
+		</a>
+		<a href="{{path('app_account_address_add')}}">
+			<button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ajouter une adresse</button>
+		</a>
+		<h1 class="mt-8 text-center text-white">Mes adresses</h1>
+
+		<p class="mt-10 text-white">C'est dans cet espace que vous pouvez allez pouvoir gérer vos adresses.</p>
+
+
+		{% if app.user.addresses|length == 0 %}
+			<p class="text-white">Vous n'avez pas encore ajouté une adresse dans votre compte client. Pour en ajouter une, veuillez</p>
+
+			<a href="{{path('app_account_address_add')}}" class="text-white">cliquer ici</a>
+
+		</p>
+		<p>
+		{% else %}
+			<div class="grid-address mt-8">
+				{% for address in app.user.addresses %}
+
+					<div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
+						<a href="#">
+							<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">{{address.name}}</h5>
+							<p class="card-texte">
+								{{address.address}}<br>
+								{{address.postal}}
+								-
+								{{address.city}}
+								-
+								{{address.country}}
+
+							</p>
+						</a>
+						<a href="{{path('app_account_address_edit',{'id': address.id})}}" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							Modifier
+
+						</a>
+						<a href="{{path('app_account_address_delete',{'id': address.id})}}" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							supprimer
+
+						</a>
+					</div>
+
+				{% endfor %}
+			</div>
+	{% endif %}
+</div>{% endblock %}

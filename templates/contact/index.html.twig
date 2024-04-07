@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Contact | La French Boutique
+{% endblock %}
+
+{% block body %}
+
+	<div
+		id="textHtmx">
+		<!-- Container for demo purpose -->
+		<div
+			class="container my-24 px-6 mx-auto ">
+
+			<!-- Section: Design Block -->
+			<section class="mb-32 text-white-800">
+				<div class="flex flex-wrap">
+					<div class="grow-0 shrink-0 basis-auto mb-6 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
+						<h2 class="text-3xl text-white font-bold mb-6 ">Nous contacter</h2>
+
+						<p class="text-white mb-6">
+							N'hésitez pas à prendre contact avec notre équipe, nous vous répondrons dans les meilleurs délais.
+						</p>
+						<p class="text-white mb-2">La French Boutique</p>
+						<p class="text-white mb-2">2 rue des lilas, 67000 STRASBOURG</p>
+
+						<p class="text-white mb-2">+ 03 89 67 89 34</p>
+
+						<p class="text-white mb-2">contact@lafrenchboutique.com</p>
+
+					</div>
+					<div
+						class="grow-0 shrink-0 basis-auto mb-12 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
+						{# {% if errors %}
+																																																																			<div class="alert alert-danger">
+																																																																				<ul>
+																																																																					{% for error in errors %}
+																																																																						<li>{{ error }}</li>
+																																																																					{% endfor %}
+																																																																				</ul>
+																																																																			</div>
+																																																																		{% endif %} #}
+
+
+						{{ form_start(form) }}
+
+						<div id="email-errors"></div>
+
+						{{ form_end(form) }}
+
+
+						{# {% if form_errors(form) %}
+																																																																			<div class="alert alert-danger">
+																																																																				<ul>
+																																																																					{% for error in form_errors(form) %}
+																																																																						<li>{{ error }}</li>
+																																																																					{% endfor %}
+																																																																				</ul>
+																																																																			</div>
+																																																																		{% endif %} #}
+
+						<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+					</div>
+				</section>
+
+
+			</div>
+
+		</div>
+
+		<script>
+
+			const emailInput = document.querySelector('#form_email');
+const emailErrors = document.querySelector('#email-errors');
+
+emailInput.addEventListener('input', () => {
+fetch('/validate-email', {
+method: 'POST',
+body: JSON.stringify(
+{email: emailInput.value}
+),
+headers: {
+'Content-Type': 'application/json'
+}
+}).then(response => response.json()).then(data => {
+if (data.success) {
+emailErrors.innerHTML = '';
+} else {
+emailErrors.innerHTML = data.message;
+}
+});
+});
+		</script>
+
+
+	{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{product.name}}
+{% endblock %}
+
+{% block body %}
+	{# 
+																												<h1 class="text-center py-8">{{product.name}}</h1> #}
+	{% dump(breadcrumb) %}
+
+	{% if breadcrumb is defined %}
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				{% for item in breadcrumb %}
+					{% if loop.last %}
+						<li class="breadcrumb-item active" aria-current="page">{{ item.name }}</li>
+					{% else %}
+						<li class="breadcrumb-item">
+							<a href="{{ item.url }}">{{ item.name }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ol>
+		</nav>
+	{% endif %}
+
+	<div class="wrapper-product grid place-items-center mx-auto">
+
+
+		<div class="product-item">
+
+
+			<img src="/uploads/{{product.illustration}}" class="object-cover" alt="{{product.name}}">
+		</div>
+
+		<div class="product-item">
+			{% include "components/like.html.twig" with {'product':product, 'user':user} %}
+
+			<h1 class="font-bold uppercase py-2 text-blue-700">{{product.name}}</h1>
+
+			<p class="text-white"></p>
+
+			<span class="text-white">{{product.subtitle}}</span>
+
+		</p>
+		<p class="my-5">
+			<small class="text-2xl text-white">{{(product.price /100)|number_format(2,",")}}€</small>
+
+
+		</p>
+		<p>
+			<span class="text-white">{{product.description}}</span>
+
+		</p>
+		{# <p><span>{{product.description}}</span></p> #}
+
+		<div class="flex space-x-2 justify-left mt-4">
+			{% if product.stock > 0 %}
+				<a href="{{path('add_to_cart',{'id': product.id})}}">
+					<button class="inline-flex items-center justify-left p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+						<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+							Ajouter au panier
+						</span>
+					</button>
+				</a>
+			{% else %}
+				<button class="inline-flex items-center justify-left p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800" disabled>
+					<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+						Stock épuisé
+					</span>
+				</button>
+			{% endif %}
+		</div>
+
+		<div class="flex space-x-2 justify-left mt-1 text-white">
+
+
+			{% if product.stock > 0 %}
+				{{ (product.stock == 2) ? "<span style='color:red;'>Il ne reste plus que 2 exemplaires</span>" : "Il reste " ~ product.stock ~ " produits en stock" }}
+			{% endif %}
+
+
+		</div>
+	</div>
+</div>
+<div class="container mx-auto mb-3">
+	<h2 class="text-4xl">Nos meilleures ventes</h2>
+	<p>Découvrez les articles les plus vendus.</p>
+
+</div>
+
+<div class="flex justify-center gap-20">
+
+	{% for product in isBest %}
+		<div class="rounded-lg shadow-lg bg-white max-w-sm">
+			<a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">
+				<img class="rounded-t-lg" src=" /uploads/{{product.illustration}}   " alt=""/>
+			</a>
+			<div class="p-6">
+				<h5 class="text-gray-900 text-2xl font-medium mb-2">{{product.name}}</h5>
+				<p class="text-gray-700 text-base mb-4">
+					{{product.subtitle}}
+				</p>
+				<p class="text-gray-600 text-xxl">{{(product.price /100)|number_format(2,",")}}€</p>
+				<a href="{{ path('app_product', {slug:product.slug} )}}">
+					<button class=" mt-3 inline-flex items-center justify-left p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+						<span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+							voir l'article
+						</span>
+					</button>
+				</a>
+
+			</div>
+		</div>
+	{% endfor %}
+</div>{% endblock %}

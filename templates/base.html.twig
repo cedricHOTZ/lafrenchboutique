@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="turbo-suppress-warning" content="true">
+
+		<title>
+			{% block title %}Bienvenue chez La French Boutique!
+			{% endblock %}
+		</title>
+		<link href="./style.css" rel="stylesheet">
+
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<script src="https://kit.fontawesome.com/c18b1bb06b.js" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+		<script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+		<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+		<script src="https://cdn.tailwindcss.com"></script>
+
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+			{# {{ encore_entry_script_tags('notyf') }} #}
+		{% endblock %}
+	</head>
+	{% block stylesheets %}
+		{{ encore_entry_link_tags('app') }}
+		{# {{ encore_entry_link_tags('notyf') }} #}
+	{% endblock %}
+
+	<body>
+
+
+		{% include'partials/headers.html.twig' %}
+		{# {% include '_notyf.html.twig' %} #}
+		{% block body %}{% endblock %}
+		{{ include('partials/footer.html.twig') }}
+	</body>
+</html>
